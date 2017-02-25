@@ -79,6 +79,7 @@ abstract class AbstractModule implements ModuleDefinitionInterface
 
         $this->registerDispatcher($di);
         $this->registerConfig($di);
+
         $this->registerViewService($di);
         $this->registerModuleServices($di);
     }
@@ -113,9 +114,55 @@ abstract class AbstractModule implements ModuleDefinitionInterface
 
     protected function registerModuleServices(DiInterface $di)
     {
+
     }
 
     protected function registerViewService(DiInterface $di)
     {
+        $patch = $this->path;
+
+        /**
+         * Register Volt Engine
+         */
+        $this->di['volt'] = function ($view, $di) use ($patch) {
+            $volt = new Volt($view, $di);
+
+            $volt->setOptions([
+                'compiledPath'      => $patch . '/cache/volt',
+                'compiledSeparator' => '_'
+            ]);
+
+            $volt->getCompiler()->addFilter('hash', 'md5');
+            $volt->getCompiler()->addFunction('strtotime', 'strtotime');
+
+            return $volt;
+        };
+
+        /**
+         * Register View Service
+         */
+        $this->di['view'] = function () use ($patch) {
+
+            $view = new View();
+            $view->setViewsDir($patch . '/views/');
+
+            $view->registerEngines([
+                '.volt'  => function ($view, $di) use ($patch) {
+
+                    $volt = new Volt($view, $di);
+
+                    $volt->setOptions([
+                        'compiledPath'      => $patch . '/cache/volt',
+                        'compiledSeparator' => '_'
+                    ]);
+
+                    return $volt;
+                },
+                '.phtml' => 'Phalcon\Mvc\View\Engine\Php',
+                '.php'   => 'Phalcon\Mvc\View\Engine\Php'
+            ]);
+
+            return $view;
+        };
     }
 }

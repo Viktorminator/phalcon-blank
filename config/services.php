@@ -15,7 +15,6 @@ use Library\Helpers;
 use Phalcon\Cache\Backend\File;
 use Phalcon\Cache\Frontend\Output;
 use Phalcon\Mvc\Router,
-    Phalcon\Mvc\Router\Group as RouterGroup,
     Phalcon\Mvc\Url as UrlResolver,
     Phalcon\DI\FactoryDefault,
     Phalcon\Mvc\Dispatcher,
@@ -31,8 +30,7 @@ use Phalcon\Mvc\Router,
     Phalcon\Session\Adapter\Files as SessionAdapter;
 
 use Library\Auth\Auth,
-    Library\Slug\Slug,
-    Console\ConsoleService;
+    Library\Slug\Slug;
 
 /**
  * The FactoryDefault Dependency Injector automatically register
@@ -49,12 +47,7 @@ $di['router'] = function () use ($config)
     $router->setUriSource(Router::URI_SOURCE_SERVER_REQUEST_URI);
     $router->removeExtraSlashes(false);
     $router->setDefaultModule('frontend');
-
-    /*$router->notFound(array(
-        'module'     => 'frontend',
-        'controller' => 'index',
-        'action'     => 'route404'
-    ));*/
+    $router->setDefaults(array('controller' => 'index', 'action' => 'route404'));
 
     /**
      * Connecting routes for modules
@@ -66,6 +59,14 @@ $di['router'] = function () use ($config)
             require $modul->dir . 'config/routes.php';
         }
     }
+
+    //$url_array = explode("/", $_SERVER['REQUEST_URI']);
+
+    /*$router->notFound([
+        "module" => $key,
+        "controller" => "index",
+        "action" => "route404"
+    ]);*/
 
     return $router;
 };
@@ -249,10 +250,6 @@ $di->set('modelsCache', function ()
     ]);
 });
 
-/**
- * Register Console Service
- */
-new ConsoleService($di);
 
-/*$debug = new \Phalcon\Debug();
-$debug->listen();*/
+$debug = new \Phalcon\Debug();
+$debug->listen();

@@ -1,10 +1,9 @@
 <?php namespace Apps\Backend;
 
-use Phalcon\Mvc\View,
-    Phalcon\Mvc\View\Engine\Volt;
-
 use Apps\Commons\AbstractModule,
     Phalcon\DiInterface;
+
+use Phalcon\Mvc\Dispatcher as MvcDispatcher;
 
 /**
  * Created by Artdevue.
@@ -28,7 +27,12 @@ class Module extends AbstractModule
      */
     public function registerModuleServices(DiInterface $di)
     {
+        parent::registerModuleServices($di);
+    }
 
+    protected function registerService(DiInterface $di)
+    {
+        parent::registerServices($di);
     }
 
     /**
@@ -36,28 +40,6 @@ class Module extends AbstractModule
      */
     protected function registerViewService(DiInterface $di)
     {
-        $this->di['view'] = function () {
-
-            $view = new View();
-            $view->setViewsDir(PROJECT_PATH . 'apps/backend/views/');
-
-            $view->registerEngines([
-                '.volt'  => function ($view, $di) {
-
-                    $volt = new Volt($view, $di);
-
-                    $volt->setOptions([
-                        'compiledPath'      => PROJECT_PATH . 'apps/backend/cache/volt',
-                        'compiledSeparator' => '_'
-                    ]);
-
-                    return $volt;
-                },
-                '.phtml' => 'Phalcon\Mvc\View\Engine\Php',
-                '.php'   => 'Phalcon\Mvc\View\Engine\Php'
-            ]);
-
-            return $view;
-        };
+        parent::registerViewService($di);
     }
 }

@@ -18,7 +18,7 @@ $front = new RouterGroup(
     ]
 );
 
-$front->add('', [
+$front->add('/', [
     'controller' => 'index',
     'action'     => 'index'
 ])->setName('front-home');

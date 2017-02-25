@@ -6,9 +6,6 @@
  * Time: 15:46
  * Project: phalcon-blank
  */
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 define('PHALCONSTART', microtime(true));
 define('PROJECT_PATH', dirname(dirname(__FILE__)) . '/');
@@ -77,8 +74,9 @@ catch (Phalcon\Exception $e)
     if (ob_get_contents()) ob_end_clean();
 
     $errorCode = 500;
+
     $errorView = PROJECT_PATH . 'apps/commons/views/error.phtml';
-    die(print_r($e->getMessage()));
+    die(print_r($e->getMessage(), true));
     switch (true)
     {
         // 401 UNAUTHORIZED

@@ -31,6 +31,8 @@ class Module extends AbstractModule
     public function registerModuleAutoloaders(DiInterface $di)
     {
         require __DIR__ . '/../../vendor/autoload.php';
+
+        parent::registerModuleAutoloaders($di);
     }
 
     /**
@@ -44,6 +46,8 @@ class Module extends AbstractModule
 
             return $queue;
         };
+
+        parent::registerModuleServices($di);
     }
 
     /**
@@ -51,40 +55,6 @@ class Module extends AbstractModule
      */
     protected function registerViewService(DiInterface $di)
     {
-        /**
-         * Register Volt Engine
-         */
-        $this->di['volt'] = function ($view, $di) {
-            $volt = new Volt($view, $di);
-
-            $volt->setOptions([
-                'compiledPath'      => PROJECT_PATH . 'apps/frontend/cache/volt',
-                'compiledSeparator' => '_'
-            ]);
-
-            $volt->getCompiler()->addFilter('hash', 'md5');
-            $volt->getCompiler()->addFunction('strtotime', 'strtotime');
-
-            return $volt;
-        };
-
-        /**
-         * Register View Service
-         */
-        $this->di['view'] = function () {
-            $view = new View();
-
-            $view->setViewsDir(PROJECT_PATH . 'apps/frontend/views/');
-
-            $view->registerEngines([
-                '.volt'  => 'volt',
-                '.phtml' => 'Phalcon\Mvc\View\Engine\Php',
-                '.php'   => 'Phalcon\Mvc\View\Engine\Php'
-            ]);
-
-            return $view;
-        };
-
         /**
          * Register Simple View Service
          */
@@ -95,5 +65,7 @@ class Module extends AbstractModule
 
             return $view;
         };
+
+        parent::registerViewService($di);
     }
 }
