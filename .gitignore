@@ -1,0 +1,9 @@
+composer.lock
+.idea/
+apps/backend/cache/
+apps/frontend/cache/
+apps/api/cache/
+vendor/
+public/vendor/
+ide/
+cache/*.php

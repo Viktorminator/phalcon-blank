@@ -1,0 +1,35 @@
+{
+  "name": "artdevue/phalcon-blank",
+  "description": "Example for easy start with Phalcon.",
+  "url": "https://github.com/artdevue/phalcon-blank",
+  "license": "MIT",
+  "type": "project",
+  "keywords": [ "phalcon", "skeleton", "blank", "api", "extension", "framework", "high load"],
+  "require": {
+    "php": ">=5.5"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.8",
+    "predis/predis": "^1.1",
+    "phalcon/zephir": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Library\\": "library/",
+      "Core\\": "library/Core"
+    },
+    "files": [
+      "library/support/helpers.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Valentyn Rasulov",
+      "email": "info@artdevue.com"
+    }
+  ],
+  "extra": {
+    "app-dir": "apps",
+    "web-dir": "public"
+  }
+}

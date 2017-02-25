@@ -1,0 +1,48 @@
+<?php
+
+return new \Phalcon\Config([
+    'viewsDir' => __DIR__ . '/../views/',
+
+    'check_access_class' => 'Console\AccessCheck',
+
+    'check_ip' => false,
+
+    'whitelist' => 'whitelist',
+    'blacklist' => 'blacklist',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Console routes filter
+    |--------------------------------------------------------------------------
+    |
+    | Set filter used for managing access to the console. By default, filter
+    | 'console_whitelist' allows only people from 'whitelist' array below.
+    |
+    */
+
+    'filter' => 'whitelist',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Enable console only for this locations
+    |--------------------------------------------------------------------------
+    |
+    | Addresses allowed to access the console. This array is used in
+    | 'console_whitelist' route filter. Nevertheless, this bundle should never
+    | get nowhere near your production servers, but who am I to tell you how
+    | to live your life :)
+    |
+    */
+
+    'whitelist' => [
+        '127.0.0.1',
+        '134.249.196.209',
+        '95.134.150.108',
+        '95.133.128.135',
+        '::1'
+    ],
+
+    'blacklist' => [
+
+    ]
+]);

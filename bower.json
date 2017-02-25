@@ -1,0 +1,22 @@
+{
+  "name": "Artdevue",
+  "version": "0.0.1",
+  "homepage": "https://artdevue.com",
+  "authors": [
+    "Valentyn Rasulov <info@artdevue.com>"
+  ],
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "public/src/vendor"
+  ],
+  "dependencies": {
+    "font-awesome": "~4.7.0",
+    "jquery": "~3.1.1",
+    "jquery-timeago": "timeago#^1.5.2",
+    "bootstrap": "^3.3.7",
+    "jquery-sortable": "^0.9.13",
+    "jquery-ui": "^1.12.1",
+    "noty": "^2.4.1"
+  }
+}
