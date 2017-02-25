@@ -1,6 +1,8 @@
-# Phalcon Blank (In developing)
+# Phalcon Blank (Currently project is under development)
 =========
-** 
+** This is a Blank application written on Phalcon framework for the performance boost. This project created to develop applications in an easy way. 
+   
+   Have fun :) 
 
 How to install
 --------------
