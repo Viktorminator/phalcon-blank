@@ -6,15 +6,15 @@
  * Time: 15:46
  * Project: phalcon-blank
  */
+/*ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);*/
 
 define('PHALCONSTART', microtime(true));
 define('PROJECT_PATH', dirname(dirname(__FILE__)) . '/');
 
 use Phalcon\Mvc\Application,
     Phalcon\Loader;
-
-/*error_reporting(E_ALL);
-ini_set("display_errors", 1);*/
 
 require_once PROJECT_PATH . 'apps/bootstrap.php';
 
@@ -24,8 +24,7 @@ try
 
     $loader->registerNamespaces([
         'Apps\Commons\Models' => PROJECT_PATH . 'apps/commons/models/',
-        'Library' => PROJECT_PATH . 'library/',
-        'Console' => PROJECT_PATH . 'library/console/',
+        'Library' => PROJECT_PATH . 'library/'
     ]);
 
     $loader->registerClasses([
@@ -61,7 +60,7 @@ try
     {
         $modules[$index] = [
             'className' => $modul->className,
-            'path'      => $modul->path
+            'path'      => $modul->dir . 'Module.php'
         ];
     }
     $application->registerModules($modules);

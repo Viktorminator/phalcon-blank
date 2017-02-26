@@ -15,8 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Library\\": "library/",
-      "Core\\": "library/Core"
+      "Library\\": "library/"
     },
     "files": [
       "library/support/helpers.php"

@@ -13,8 +13,8 @@ namespace Apps\Commons;
 
 use Phalcon\Loader,
     Phalcon\Mvc\View,
-    Phalcon\Mvc\Dispatcher,
     Phalcon\DiInterface,
+    Phalcon\Mvc\Dispatcher,
     Phalcon\Mvc\View\Engine\Volt,
     Phalcon\Mvc\ModuleDefinitionInterface;
 
@@ -24,18 +24,22 @@ abstract class AbstractModule implements ModuleDefinitionInterface
      * @var \Phalcon\DiInterface
      */
     protected $di;
+
     /**
      * @var \Phalcon\Config
      */
     protected $config;
+
     /**
      * @var string Module Name
      */
     protected $module;
+
     /**
      * @var string Module Namespace
      */
     protected $namespace;
+
     /**
      * @var string Module Path
      */
@@ -56,8 +60,6 @@ abstract class AbstractModule implements ModuleDefinitionInterface
         ]);
 
         $loader->register();
-
-        //$this->registerShared();
     }
 
     /**
@@ -89,8 +91,9 @@ abstract class AbstractModule implements ModuleDefinitionInterface
      */
     protected function registerDispatcher(DiInterface $di)
     {
-        $namespace              = $this->namespace;
-        $this->di['dispatcher'] = function () use ($namespace, $di) {
+        $namespace = $this->namespace;
+        $this->di['dispatcher'] = function () use ($namespace, $di)
+        {
             $dispatcher = new Dispatcher();
             $dispatcher->setDefaultNamespace($namespace . '\Controllers');
             $dispatcher->setEventsManager($di['eventsManager']);
@@ -119,16 +122,24 @@ abstract class AbstractModule implements ModuleDefinitionInterface
 
     protected function registerViewService(DiInterface $di)
     {
-        $patch = $this->path;
+        $patch  = $this->path;
+        $module = $this->module;
+
+        // We verify the existence of a directory
+        if (!file_exists(PROJECT_PATH . '/cache/volt/' . $module)) {
+            if (!mkdir(PROJECT_PATH . '/cache/volt/' . $module, 0777, true)) {
+                die('Unable to create directory ...');
+            }
+        }
 
         /**
          * Register Volt Engine
          */
-        $this->di['volt'] = function ($view, $di) use ($patch) {
+        $this->di['volt'] = function ($view, $di) use ($module) {
             $volt = new Volt($view, $di);
 
             $volt->setOptions([
-                'compiledPath'      => $patch . '/cache/volt',
+                'compiledPath'      => PROJECT_PATH . '/cache/volt/' . $module . '/',
                 'compiledSeparator' => '_'
             ]);
 
@@ -141,18 +152,18 @@ abstract class AbstractModule implements ModuleDefinitionInterface
         /**
          * Register View Service
          */
-        $this->di['view'] = function () use ($patch) {
+        $this->di['view'] = function () use ($patch, $module) {
 
             $view = new View();
             $view->setViewsDir($patch . '/views/');
 
             $view->registerEngines([
-                '.volt'  => function ($view, $di) use ($patch) {
+                '.volt'  => function ($view, $di) use ($module) {
 
                     $volt = new Volt($view, $di);
 
                     $volt->setOptions([
-                        'compiledPath'      => $patch . '/cache/volt',
+                        'compiledPath'      => PROJECT_PATH . '/cache/volt/' . $module . '/',
                         'compiledSeparator' => '_'
                     ]);
 

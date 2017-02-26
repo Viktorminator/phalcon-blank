@@ -11,13 +11,12 @@
  * Services are globally registered in this file
  */
 
-use Library\Helpers;
 use Phalcon\Cache\Backend\File;
 use Phalcon\Cache\Frontend\Output;
 use Phalcon\Mvc\Router,
+    Phalcon\Mvc\Router\Group as RouterGroup,
     Phalcon\Mvc\Url as UrlResolver,
     Phalcon\DI\FactoryDefault,
-    Phalcon\Mvc\Dispatcher,
     Phalcon\Mvc\View,
     Phalcon\Security,
     Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter,
@@ -26,11 +25,7 @@ use Phalcon\Mvc\Router,
     Phalcon\Crypt,
     Phalcon\Mvc\View\Engine\Volt,
     Phalcon\Mvc\Model\Metadata\Files as MetaDataAdapter,
-    Phalcon\Queue\Beanstalk,
     Phalcon\Session\Adapter\Files as SessionAdapter;
-
-use Library\Auth\Auth,
-    Library\Slug\Slug;
 
 /**
  * The FactoryDefault Dependency Injector automatically register
@@ -49,6 +44,10 @@ $di['router'] = function () use ($config)
     $router->setDefaultModule('frontend');
     $router->setDefaults(array('controller' => 'index', 'action' => 'route404'));
 
+    // Get explode uri
+    $url_array = explode("/", $_SERVER['REQUEST_URI']);
+    $module = 'frontend';
+
     /**
      * Connecting routes for modules
      */
@@ -56,17 +55,34 @@ $di['router'] = function () use ($config)
     {
         if (file_exists($modul->dir . 'config/routes.php'))
         {
+            // Create a group with a backend module and controller
+            $route = new RouterGroup([
+                    "module" => $key
+                ]);
+
+            if (!empty($modul->prefix_router))
+            {
+                // All the routes start with $prefix_router
+                $route->setPrefix("/" . $modul->prefix_router);
+            }
+
             require $modul->dir . 'config/routes.php';
+
+            // Add the group to the router
+            $router->mount($route);
+        }
+
+        if (count($url_array) >= 2 && $url_array[1] == $modul->prefix_router)
+        {
+            $module = $key;
         }
     }
 
-    //$url_array = explode("/", $_SERVER['REQUEST_URI']);
-
-    /*$router->notFound([
-        "module" => $key,
+    $router->notFound([
+        "module" => $module,
         "controller" => "index",
         "action" => "route404"
-    ]);*/
+    ]);
 
     return $router;
 };

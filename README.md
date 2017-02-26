@@ -15,6 +15,8 @@ Run code in the terminal:
 
 ```bash
 composer create-project artdevue/phalcon-blank /path/to/install
+composer update
+bower update
 ```
 
 ### Using Git
@@ -25,6 +27,7 @@ First you need to clone the project, update vendors:
 git clone https://github.com/artdevue/phalcon-blank.git ./project
 cd project
 composer update
+bower update
 ```
 
 Requirements

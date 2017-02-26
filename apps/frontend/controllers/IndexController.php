@@ -11,7 +11,6 @@
 
 namespace Apps\Frontend\Controllers;
 
-use Phalcon\Mvc\View;
 
 class IndexController extends ControllerBase
 {
@@ -22,7 +21,8 @@ class IndexController extends ControllerBase
 
     public function indexAction()
     {
-
+        //$df = 'kj';
+        //$this->view->setVars(compact('df'));
     }
 
     public function route404Action()

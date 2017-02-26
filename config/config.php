@@ -15,17 +15,17 @@ return new \Phalcon\Config([
         'frontend' => [
             'dir' => PROJECT_PATH . 'apps/frontend/',
             'className' => 'Apps\Frontend\Module',
-            'path'      => PROJECT_PATH . 'apps/frontend/Module.php'
+            'prefix_router' => false
         ],
         'backend'  => [
             'dir' => PROJECT_PATH . 'apps/backend/',
             'className' => 'Apps\Backend\Module',
-            'path'      => PROJECT_PATH . 'apps/backend/Module.php'
+            'prefix_router' => 'admin'
         ],
         'api'      => [
             'dir' => PROJECT_PATH . 'apps/api/',
             'className' => 'Apps\Api\Module',
-            'path'      => PROJECT_PATH . 'apps/api/Module.php'
+            'prefix_router' => 'api'
         ]
     ],
 
@@ -40,8 +40,8 @@ return new \Phalcon\Config([
 
     'application' => [
         'cryptSalt' => 'WtxTUtBpgDSPLJIWdVcOQbdza1G1KLYx',
-        'cacheDir'  => __DIR__ . '/../cache/',
-        'viewsDir'  => __DIR__ . '/../apps/commons/views/',
+        'cacheDir'  => PROJECT_PATH . 'cache/',
+        'viewsDir'  => PROJECT_PATH . 'apps/commons/views/',
     ],
 
     'base_uri' => 'http://phalcon-blank.com/',
