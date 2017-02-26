@@ -33,10 +33,8 @@ bower update
 Requirements
 ------------
 
-* PHP 5.5 and up
+* PHP 5.5.x/5.6.x/7.0.x development resources (PHP 5.3 and 5.4 are no longer supported)
 * Phalcon **3.0.2**
-* Phalcony (latest)
-* PhalconEye/Framework (latest)
 
 
 License
