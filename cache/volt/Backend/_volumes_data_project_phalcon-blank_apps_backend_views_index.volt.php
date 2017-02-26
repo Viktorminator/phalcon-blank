@@ -9,7 +9,7 @@
     <!-- Load Fonts & Stylesheets -->
 </head>
 <body>
-{{ content() }}
+    <?= $this->getContent() ?>
 <!-- -------------- Scripts -------------- -->
 </body>
 </html>

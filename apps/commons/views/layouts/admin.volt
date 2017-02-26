@@ -9,7 +9,9 @@
     <!-- Load Fonts & Stylesheets -->
 </head>
 <body>
-{{ content() }}
+<div class="page-content">
+    {{ content() }}
+</div>
 <!-- -------------- Scripts -------------- -->
 </body>
 </html>

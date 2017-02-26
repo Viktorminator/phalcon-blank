@@ -12,7 +12,7 @@
 namespace Apps\Api\Controllers;
 
 
-class IndexController extends ControllerBase
+class IndexController extends BaseController
 {
     public function initialize()
     {
@@ -22,10 +22,5 @@ class IndexController extends ControllerBase
     public function indexAction()
     {
 
-    }
-
-    public function route404Action()
-    {
-        die("error api");
     }
 }

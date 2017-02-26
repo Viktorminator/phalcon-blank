@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by Artdevue.
- * User: artdevue - ControllerBase.php
+ * User: artdevue - BaseController.php
  * Date: 25.02.17
  * Time: 17:02
  * Project: phalcon-blank
@@ -16,7 +16,7 @@ use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\View,
     Phalcon\Mvc\Dispatcher;
 
-class ControllerBase extends Controller
+class BaseController extends Controller
 {
     /**
      * Triggered before executing the controller/action method. At this point the dispatcher has been initialized
@@ -60,5 +60,10 @@ class ControllerBase extends Controller
     public function afterExecuteRoute($dispatcher)
     {
 
+    }
+
+    public function route404Action()
+    {
+        die("error api");
     }
 }

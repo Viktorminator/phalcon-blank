@@ -85,7 +85,7 @@ $di['router'] = function () use ($config) {
 
     $router->notFound([
         "module"     => $module,
-        "controller" => "index",
+        "controller" => "base",
         "action"     => "route404"
     ]);
 

@@ -12,7 +12,7 @@
 namespace Apps\Frontend\Controllers;
 
 
-class IndexController extends ControllerBase
+class IndexController extends BaseController
 {
     public function initialize()
     {
@@ -25,8 +25,4 @@ class IndexController extends ControllerBase
         //$this->view->setVars(compact('df'));
     }
 
-    public function route404Action()
-    {
-        die("error front");
-    }
 }
