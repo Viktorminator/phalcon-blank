@@ -15,17 +15,20 @@ return new \Phalcon\Config([
         'frontend' => [
             'dir' => PROJECT_PATH . 'apps/frontend/',
             'className' => 'Apps\Frontend\Module',
-            'prefix_router' => false
-        ],
-        'backend'  => [
-            'dir' => PROJECT_PATH . 'apps/backend/',
-            'className' => 'Apps\Backend\Module',
-            'prefix_router' => 'admin'
+            'prefix_router' => false,
+            'host_name' => false
         ],
         'api'      => [
             'dir' => PROJECT_PATH . 'apps/api/',
             'className' => 'Apps\Api\Module',
-            'prefix_router' => 'api'
+            'prefix_router' => 'api',
+            'host_name' => false
+        ],
+        'backend'  => [
+            'dir' => PROJECT_PATH . 'apps/backend/',
+            'className' => 'Apps\Backend\Module',
+            'prefix_router' => 'admin',
+            'host_name' => false
         ]
     ],
 

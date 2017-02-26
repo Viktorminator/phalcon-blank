@@ -26,6 +26,7 @@ use Phalcon\Mvc\Router,
     Phalcon\Mvc\View\Engine\Volt,
     Phalcon\Mvc\Model\Metadata\Files as MetaDataAdapter,
     Phalcon\Session\Adapter\Files as SessionAdapter;
+use Phalcon\Mvc\Router\Annotations as RouterAnnotations;
 
 /**
  * The FactoryDefault Dependency Injector automatically register
@@ -36,34 +37,39 @@ $di = new FactoryDefault();
 /**
  * Registering a router
  */
-$di['router'] = function () use ($config)
-{
-    $router = new Router(false);
+$di['router'] = function () use ($config) {
+
+    //$router = new Router(false);
+    // Use the annotations router. We're passing false as we don't want the router to add its default patterns
+    $router = new RouterAnnotations(false);
+
     $router->setUriSource(Router::URI_SOURCE_SERVER_REQUEST_URI);
     $router->removeExtraSlashes(false);
     $router->setDefaultModule('frontend');
-    $router->setDefaults(array('controller' => 'index', 'action' => 'route404'));
+    $router->setDefaults(['controller' => 'index', 'action' => 'route404']);
 
     // Get explode uri
     $url_array = explode("/", $_SERVER['REQUEST_URI']);
-    $module = 'frontend';
+    $module    = 'frontend';
 
     /**
      * Connecting routes for modules
      */
-    foreach ($config->modules as $key => $modul)
-    {
-        if (file_exists($modul->dir . 'config/routes.php'))
-        {
+    foreach ($config->modules as $key => $modul) {
+        if (file_exists($modul->dir . 'config/routes.php')) {
             // Create a group with a backend module and controller
             $route = new RouterGroup([
-                    "module" => $key
-                ]);
+                "module" => $key
+            ]);
 
-            if (!empty($modul->prefix_router))
-            {
-                // All the routes start with $prefix_router
+            // All the routes start with $prefix_router
+            if (!empty($modul->prefix_router)) {
                 $route->setPrefix("/" . $modul->prefix_router);
+            }
+
+            // Hostname restriction
+            if (!empty($modul->host_name)) {
+                $route->setHostName($modul->host_name);
             }
 
             require $modul->dir . 'config/routes.php';
@@ -72,16 +78,15 @@ $di['router'] = function () use ($config)
             $router->mount($route);
         }
 
-        if (count($url_array) >= 2 && $url_array[1] == $modul->prefix_router)
-        {
+        if (count($url_array) >= 2 && $url_array[1] == $modul->prefix_router) {
             $module = $key;
         }
     }
 
     $router->notFound([
-        "module" => $module,
+        "module"     => $module,
         "controller" => "index",
-        "action" => "route404"
+        "action"     => "route404"
     ]);
 
     return $router;
@@ -95,8 +100,7 @@ $di->set('config', $config);
 /**
  * The URL component is used to generate all kind of urls in the application
  */
-$di->set('url', function () use ($config)
-{
+$di->set('url', function () use ($config) {
     $url = new UrlResolver();
     $url->setBaseUri($config->base_uri);
 
@@ -109,22 +113,20 @@ $di->set('assets', 'Phalcon\Assets\Manager', true);
 /**
  * Database connection is created based in the parameters defined in the configuration file
  */
-$di['db'] = function () use ($config)
-{
+$di['db'] = function () use ($config) {
     return new DbAdapter([
-        'host' => $config->database->host,
+        'host'     => $config->database->host,
         'username' => $config->database->username,
         'password' => $config->database->password,
-        'dbname' => $config->database->dbname,
-        'charset' => $config->database->charset
+        'dbname'   => $config->database->dbname,
+        'charset'  => $config->database->charset
     ]);
 };
 
 /**
  * If the configuration specify the use of metadata adapter use it or use memory otherwise
  */
-$di['modelsMetadata'] = function () use ($config)
-{
+$di['modelsMetadata'] = function () use ($config) {
     return new MetaDataAdapter([
         'metaDataDir' => $config->application->cacheDir . 'metaData/'
     ]);
@@ -133,8 +135,7 @@ $di['modelsMetadata'] = function () use ($config)
 /**
  * Crypt service
  */
-$di->set('crypt', function () use ($config)
-{
+$di->set('crypt', function () use ($config) {
     $crypt = new Crypt();
     $crypt->setKey($config->application->cryptSalt);
 
@@ -144,8 +145,7 @@ $di->set('crypt', function () use ($config)
 /**
  * Start the session the first time some component request the session service
  */
-$di->set('session', function () use ($config)
-{
+$di->set('session', function () use ($config) {
     $session = new SessionAdapter([
         'uniqueId' => $config->prefix_session
     ]);
@@ -157,12 +157,11 @@ $di->set('session', function () use ($config)
 /**
  * Flash service with custom CSS classes
  */
-$di->set('flash', function ()
-{
+$di->set('flash', function () {
     return new Flash([
-        'error' => 'errorHandler alert alert-danger notification-error',
+        'error'   => 'errorHandler alert alert-danger notification-error',
         'success' => 'errorHandler alert alert-success',
-        'notice' => 'errorHandler alert alert-info',
+        'notice'  => 'errorHandler alert alert-info',
         'warning' => 'errorHandler alert alert-warning',
     ]);
 });
@@ -170,18 +169,16 @@ $di->set('flash', function ()
 /**
  * FlashSession service with custom CSS classes
  */
-$di->set('flashSession', function ()
-{
+$di->set('flashSession', function () {
     return new FlashSession([
-        'error' => 'errorHandler alert alert-danger notification-error',
+        'error'   => 'errorHandler alert alert-danger notification-error',
         'success' => 'errorHandler alert alert-success',
-        'notice' => 'errorHandler alert alert-info',
+        'notice'  => 'errorHandler alert alert-info',
         'warning' => 'errorHandler alert alert-warning',
     ]);
 });
 
-$di->set('security', function ()
-{
+$di->set('security', function () {
     $security = new Security();
 
     //Set the password hashing factor to 12 rounds
@@ -196,27 +193,28 @@ $di->set('security', function ()
 $di->setShared('auth', 'Library\Auth\Auth');
 $di->setShared('slug', 'Library\Slug\Slug');
 
-$di['view'] = function () use ($config)
-{
+/**
+ * Register View
+ */
+$di['view'] = function () use ($config) {
 
     $view = new View();
     $view->setViewsDir($config->application->viewsDir);
 
     $view->registerEngines([
-        '.volt' => function ($view, $di) use ($config)
-        {
+        '.volt'  => function ($view, $di) use ($config) {
 
             $volt = new Volt($view, $di);
 
             $volt->setOptions([
-                'compiledPath' => $config->application->cacheDir . 'volt/',
+                'compiledPath'      => $config->application->cacheDir . 'volt/',
                 'compiledSeparator' => '_'
             ]);
 
             return $volt;
         },
         '.phtml' => 'Phalcon\Mvc\View\Engine\Php',
-        '.php' => 'Phalcon\Mvc\View\Engine\Php'
+        '.php'   => 'Phalcon\Mvc\View\Engine\Php'
     ]);
 
     return $view;
@@ -225,8 +223,7 @@ $di['view'] = function () use ($config)
 /**
  * View cache
  */
-$di['viewCache'] = function ()
-{
+$di['viewCache'] = function () {
 
     //Cache data for one day by default
     $frontCache = new Output([
@@ -239,7 +236,7 @@ $di['viewCache'] = function ()
 
     return new File($frontCache, [
         "cacheDir" => PROJECT_PATH . "cache/views/",
-        "prefix" => "cache-"
+        "prefix"   => "cache-"
     ]);
 };
 
@@ -247,14 +244,12 @@ $di['viewCache'] = function ()
 /**
  * Register Helpers Service
  */
-if ( ! $di->has('helpers'))
-{
+if (!$di->has('helpers')) {
     $di->setShared('helpers', 'Library\Helpers');
 }
 
 // Models cache service Register
-$di->set('modelsCache', function ()
-{
+$di->set('modelsCache', function () {
     // By default, the cache data is stored one day
     $frontCache = new \Phalcon\Cache\Frontend\Data([
         "lifetime" => 86400
@@ -262,7 +257,7 @@ $di->set('modelsCache', function ()
 
     return new File($frontCache, [
         "cacheDir" => PROJECT_PATH . "cache/sitemap/",
-        "prefix" => "cache-"
+        "prefix"   => "cache-"
     ]);
 });
 

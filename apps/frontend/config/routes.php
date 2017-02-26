@@ -11,3 +11,5 @@ $route->add('/', [
     'controller' => 'index',
     'action'     => 'index'
 ])->setName('front-home');
+
+//$router->addResource("Products", "/products");
