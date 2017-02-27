@@ -59,7 +59,7 @@ class BaseController extends Controller
             $this->logger->debug((string)$exception);
         }
 
-        die(json_encode(['success' => false, 'message' => $message]));
+        return ['success' => false, 'message' => $message];
     }
 
     /**

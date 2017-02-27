@@ -45,9 +45,10 @@ class Module extends AbstractModule
         $dispatcher->setDefaultNamespace('Apps\Api\Controllers');
 
         $eventsManager = new \Phalcon\Events\Manager();
+
         $eventsManager->attach('dispatch:beforeException', function ($event, $dispatcher, $exception) use (&$di) {
-            //error_log('dispatch:beforeException');
-            $dispatcher->setParam('exception',$exception);
+
+            $dispatcher->setParam('exception', $exception);
             $dispatcher->forward(
                 [
                     'module'     => 'api',
@@ -60,20 +61,38 @@ class Module extends AbstractModule
             return false;
         });
 
+        $eventsManager->attach('dispatch:beforeNotFoundAction', function ($event, $dispatcher) use (&$di) {
+
+            $dispatcher->forward(
+                [
+                    'module'     => 'api',
+                    'controller' => 'base',
+                    'action'     => 'route404'
+                ]
+            );
+
+            return false;
+        });
+
+        // Attach a listener for type "dispatch:afterDispatch"
+        $eventsManager->attach("dispatch:afterDispatch", function ($event, $dispatcher) use (&$di) {
+
+            $content  = $dispatcher->getReturnedValue();
+            $response = $di->get('response');
+            $response->setHeader('Access-Control-Allow-Origin', '*')
+                ->setContentType('application/json', 'utf-8');
+            $response->setContent(json_encode($content));
+
+            $dispatcher->setReturnedValue($response);
+        }
+        );
+
         $dispatcher->setEventsManager($eventsManager);
 
         $di->set('dispatcher', $dispatcher);
 
-        /**
-         * @var \Phalcon\Http\ResponseInterface $response
-         */
-        $response = $di->get('response');
-        $response->setHeader('Access-Control-Allow-Origin', '*')
-            ->setContentType('application/json', 'utf-8');
-
         // This component makes use of adapters to store the logged messages.
-        $di->setShared('logger', function ()
-        {
+        $di->setShared('logger', function () {
             return new FileAdapter(PROJECT_PATH . "apps/logs/api.log");
         });
     }

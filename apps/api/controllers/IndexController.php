@@ -20,7 +20,8 @@ class IndexController extends BaseController
 
     public function indexAction()
     {
-        throw new \Exception('Just because');
-        return 'test';
+        //throw new \Exception('Just because');
+        //return $this->route404Action();
+        return ['test'];
     }
 }

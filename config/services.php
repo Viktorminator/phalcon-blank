@@ -240,7 +240,6 @@ $di['viewCache'] = function () {
     ]);
 };
 
-
 /**
  * Register Helpers Service
  */
