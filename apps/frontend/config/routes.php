@@ -10,6 +10,6 @@
 $route->add('/', [
     'controller' => 'index',
     'action'     => 'index'
-])->setName('front-home');
+])->setName('frontend.index');
 
 //$router->addResource("Products", "/products");

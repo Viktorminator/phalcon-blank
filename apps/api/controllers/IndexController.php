@@ -11,7 +11,6 @@
 
 namespace Apps\Api\Controllers;
 
-
 class IndexController extends BaseController
 {
     public function initialize()
@@ -21,6 +20,7 @@ class IndexController extends BaseController
 
     public function indexAction()
     {
-
+        throw new \Exception('Just because');
+        return 'test';
     }
 }

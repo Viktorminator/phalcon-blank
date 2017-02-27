@@ -10,4 +10,4 @@
 $route->add('', [
     'controller' => 'index',
     'action'     => 'index'
-])->setName('back-index');
+])->setName('backend.index');

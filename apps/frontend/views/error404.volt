@@ -35,7 +35,7 @@
             <section class="error-message">
                 <h1 class="error-code">404</h1>
                 <h2 class="error-description">Page Not Found Frontend Module</h2>
-                <a href="/">Home</a>
+                <a href="{{ url(['for': 'frontend.index']) }}">Home</a>
             </section>
         </section>
     </section>

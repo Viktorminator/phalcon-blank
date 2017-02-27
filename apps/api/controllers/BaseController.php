@@ -13,32 +13,8 @@ namespace Apps\Api\Controllers;
 
 use Phalcon\Mvc\Controller;
 
-use Phalcon\Mvc\View,
-    Phalcon\Mvc\Dispatcher;
-
 class BaseController extends Controller
 {
-    /**
-     * Triggered before executing the controller/action method. At this point the dispatcher has been initialized
-     * the controller and know if the action exist.
-     *
-     * @param Dispatcher $dispatcher
-     *
-     * @Triggered on Listeners/Controllers
-     */
-    public function beforeExecuteRoute(Dispatcher $dispatcher)
-    {
-
-    }
-
-    /**
-     * Function Onconstruct
-     */
-    public function onconstruct()
-    {
-
-    }
-
     /**
      * Allow to globally initialize the controller in the request
      *
@@ -50,20 +26,50 @@ class BaseController extends Controller
     }
 
     /**
-     * Triggered after executing the controller/action method. As operation cannot be stopped, only use this event
-     * to make clean up after execute the action
-     *
-     * @param $dispatcher
-     *
-     * @Triggered on Listeners/Controllers
+     * @return array
      */
-    public function afterExecuteRoute($dispatcher)
+    public function exceptionAction()
     {
+        /**
+         * @var $exception \Exception
+         */
+        $exception = $this->di->get('dispatcher')->getParam('exception');
 
+        $message = $exception->getMessage();
+
+        if (empty($message))
+        {
+            $message = 'Houston we have got a problem';
+        }
+
+        if ($this->config->debug == true)
+        {
+            switch ($exception->getCode())
+            {
+                case 500:
+                    $this->logger->critical((string)$exception);
+                    break;
+                default:
+                    $this->logger->debug((string)$exception);
+                    break;
+            }
+        }
+        else
+        {
+            $this->logger->debug((string)$exception);
+        }
+
+        die(json_encode(['success' => false, 'message' => $message]));
     }
 
+    /**
+     * @return array
+     */
     public function route404Action()
     {
-        die("error api");
+        $this->response->setStatusCode(404, 'Not found');
+        $this->logger->debug('Error to handle: ' . $this->request->getURI());
+
+        return ['success' => false, 'url' => $this->request->getURI(), 'parameters' => $this->dispatcher->getParams()];
     }
 }

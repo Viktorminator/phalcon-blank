@@ -1,10 +1,12 @@
 <?php namespace Apps\Api;
 
-use Phalcon\Mvc\View,
-    Phalcon\Mvc\View\Engine\Volt;
-
+use Phalcon\Mvc\View;
 use Apps\Commons\AbstractModule,
-    Phalcon\DiInterface;
+    Phalcon\DiInterface,
+    Phalcon\Mvc\Dispatcher;
+
+use Phalcon\Logger;
+use Phalcon\Logger\Adapter\File as FileAdapter;
 
 /**
  * Created by Artdevue.
@@ -32,10 +34,65 @@ class Module extends AbstractModule
     }
 
     /**
+     * Registers the module-only services
+     *
+     * @param \Phalcon\DiInterface $di
+     */
+    public function registerServices(DiInterface $di = null)
+    {
+        $dispatcher = new Dispatcher();
+        $dispatcher->setDI($di);
+        $dispatcher->setDefaultNamespace('Apps\Api\Controllers');
+
+        $eventsManager = new \Phalcon\Events\Manager();
+        $eventsManager->attach('dispatch:beforeException', function ($event, $dispatcher, $exception) use (&$di) {
+            //error_log('dispatch:beforeException');
+            $dispatcher->setParam('exception',$exception);
+            $dispatcher->forward(
+                [
+                    'module'     => 'api',
+                    'controller' => 'base',
+                    'action'     => 'exception',
+                    'error'      => $exception
+                ]
+            );
+
+            return false;
+        });
+
+        $dispatcher->setEventsManager($eventsManager);
+
+        $di->set('dispatcher', $dispatcher);
+
+        /**
+         * @var \Phalcon\Http\ResponseInterface $response
+         */
+        $response = $di->get('response');
+        $response->setHeader('Access-Control-Allow-Origin', '*')
+            ->setContentType('application/json', 'utf-8');
+
+        // This component makes use of adapters to store the logged messages.
+        $di->setShared('logger', function ()
+        {
+            return new FileAdapter(PROJECT_PATH . "apps/logs/api.log");
+        });
+    }
+
+    /**
      * Registers module View Service
      */
     protected function registerViewService(DiInterface $di)
     {
-        parent::registerViewService($di);
+
+        //parent::registerViewService($di);
+
+        $this->di['view'] = function () {
+
+            $view = new View();
+            // Disable the view to avoid rendering
+            $view->disable();
+
+            return $view;
+        };
     }
 }

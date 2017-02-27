@@ -17,6 +17,8 @@ use Phalcon\Loader,
     Phalcon\Mvc\Dispatcher,
     Phalcon\Mvc\View\Engine\Volt,
     Phalcon\Mvc\ModuleDefinitionInterface;
+use Phalcon\Logger;
+use Phalcon\Logger\Adapter\File as FileAdapter;
 
 abstract class AbstractModule implements ModuleDefinitionInterface
 {
@@ -91,9 +93,8 @@ abstract class AbstractModule implements ModuleDefinitionInterface
      */
     protected function registerDispatcher(DiInterface $di)
     {
-        $namespace = $this->namespace;
-        $this->di['dispatcher'] = function () use ($namespace, $di)
-        {
+        $namespace              = $this->namespace;
+        $this->di['dispatcher'] = function () use ($namespace, $di) {
             $dispatcher = new Dispatcher();
             $dispatcher->setDefaultNamespace($namespace . '\Controllers');
             $dispatcher->setEventsManager($di['eventsManager']);
@@ -107,17 +108,25 @@ abstract class AbstractModule implements ModuleDefinitionInterface
      */
     protected function registerConfig(DiInterface $di)
     {
+        $this->config = $di->get('config');
         /**
          * Read configuration
          */
-        $this->config = include $this->path . "/config/config.php";
-
-        $this->di->set('moduleConfig', $this->config, true);
+        if (file_exists($this->path . "/config/config.php")) {
+            $config = include $this->path . "/config/config.php";
+            $this->di->set('config', $this->config->merge($config), true);
+        }
     }
 
     protected function registerModuleServices(DiInterface $di)
     {
+        $module = $this->module;
 
+        // This component makes use of adapters to store the logged messages.
+        $di->setShared('logger', function () use ($module )
+        {
+            return new FileAdapter(PROJECT_PATH . "apps/logs/' . $module  . '.log");
+        });
     }
 
     protected function registerViewService(DiInterface $di)
