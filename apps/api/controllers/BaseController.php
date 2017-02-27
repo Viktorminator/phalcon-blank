@@ -57,9 +57,16 @@ class BaseController extends Controller
         else
         {
             $this->logger->debug((string)$exception);
+            $message = '';
         }
 
-        return ['success' => false, 'message' => $message];
+        $this->response->setStatusCode($exception->getCode(), $this->helpers->getHttpStatusMessage($exception->getCode()));
+
+        return [
+            'success' => false,
+            'status_code' => $exception->getCode() . ' - ' . $this->helpers->getHttpStatusMessage($exception->getCode()),
+            'message' => $message
+        ];
     }
 
     /**
@@ -70,6 +77,11 @@ class BaseController extends Controller
         $this->response->setStatusCode(404, 'Not found');
         $this->logger->debug('Error to handle: ' . $this->request->getURI());
 
-        return ['success' => false, 'url' => $this->request->getURI(), 'parameters' => $this->dispatcher->getParams()];
+        return [
+            'success' => false,
+            'status_code' => '404 - Not Found',
+            'url' => $this->request->getURI(),
+            'parameters' => $this->dispatcher->getParams()
+        ];
     }
 }

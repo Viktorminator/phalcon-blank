@@ -16,6 +16,7 @@ use Phalcon\Mvc\View,
 
 class IndexController extends BaseController
 {
+
     public function initialize()
     {
         parent::initialize();

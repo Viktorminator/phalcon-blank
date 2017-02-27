@@ -69,6 +69,8 @@ class BaseController extends Controller
      */
     public function route404Action()
     {
+        $this->response->setStatusCode(404, 'Not found');
+
         // Shows only the view related to the action
         $this->view->setRenderLevel(
             View::LEVEL_ACTION_VIEW

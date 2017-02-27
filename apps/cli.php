@@ -14,6 +14,7 @@ use Phalcon\Cli\Console as ConsoleApp;
 use Phalcon\Loader;
 
 define('VERSION', '1.0.0');
+define('PROJECT_PATH', dirname(dirname(__FILE__)) . '/');
 
 // Using the CLI factory default services container
 $di = new CliDI();
@@ -41,6 +42,11 @@ $loader->register();
 
 // Load the configuration file (if any)
 $config = include_once CORE_PATH . '/config/config.php';
+
+/**
+ * Register the global configuration as config
+ */
+$di->set('config', $config);
 
 //Setup the database service
 $di->set('db', function() use ($config) {
