@@ -66,7 +66,7 @@ Create directories and files for this new module...
 Installing the module is complete!
 Use with pleasure!
 ```
-After installing our new module will be immediately available at http://site.com/catalog
+After installing new module will be immediately available at http://site.com/catalog
 
 The syntax of this command:
 ```bash
@@ -74,7 +74,7 @@ $ php apps/cli.php modules create $nameModule $prefixRouter $hostName
 ```
 - **$nameModule** - (*String - Required value!*) Your module name
 - **$prefixRouter** - (*String*) If the router prefix different from the module name, then enter here. If If you select - **null** - then there will be no prefix.
-- **$hostName**     - (*String*) Host Name, if you want your module was available from another Hostal For example: http://catalog.site.com
+- **$hostName**     - (*String*) Host Name, if you want to have your module on another host. For example: http://catalog.site.com
 
 License
 -------
