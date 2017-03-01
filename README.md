@@ -43,26 +43,38 @@ After setup you’ll have multimodule apps.
 * BACKEND and FRONTEND - A multi-module application uses the same document root for more than one module.
 
 ### Installing the module
-If you want to install a new module, you need a configuration file (([config/config.php](https://github.com/artdevue/phalcon-blank/blob/master/config/config.php))) to add a new record to the variable *'modules'*
-```php
-'newmodul' => [
-    'dir' => PROJECT_PATH . 'apps/newmodul/',
-    'className' => 'Apps\Newmodul\Module',
-    'prefix_router' => false,
-    'host_name' => false
-]
-```
-- **newmodul**      - replaced by your module name
-- **dir**           - location module directory
-- **className**     - ClassName for new module
-- **prefix_router** - URL prefix for the new router. If you write "news", then the module will be available with a URL address start with **/news**
-- **host_name**     - This is the name by which the host will be available this module If left empty - then the module will use the default hostname. If you write "news.site.com" - then there will be a new module is available at URL http//news.site.com
-
-After the configuration file settings using the terminal run the following command:
+If you want to install a new module, you need using the terminal run the following command
 ```bash
-$ php apps/cli.php modules update
+$ php apps/cli.php modules create modulename
 ```
-If there are new options for the new module, then by a hint system will install a new module
+**modulename** - replace it with the name of the module
+
+For example, after executing the commands below in a terminal
+```bash
+$ php apps/cli.php modules create catalog
+```
+In the terminal, we see the report module installation
+```bash
+$ php apps/cli.php modules create catalog
+Do you really want to install the module catalog?  Type 'yes' to continue: yes
+
+Thank you, continuing...
+Reading configuration file...
+Creating a backup of the configuration file...
+Record changes in the configuration file...
+Create directories and files for this new module...
+Installing the module is complete!
+Use with pleasure!
+```
+After installing our new module will be immediately available at http://site.com/catalog
+
+The syntax of this command:
+```bash
+$ php apps/cli.php modules create $nameModule $prefixRouter $hostName
+```
+- **$nameModule** - (*String - Required value!*) Your module name
+- **$prefixRouter** - (*String*) If the router prefix different from the module name, then enter here. If If you select - **null** - then there will be no prefix.
+- **$hostName**     - (*String*) Host Name, if you want your module was available from another Hostal For example: http://catalog.site.com
 
 License
 -------

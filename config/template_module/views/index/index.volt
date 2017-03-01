@@ -1,0 +1,1 @@
+%namec% index module
