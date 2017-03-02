@@ -1,0 +1,46 @@
+<?php namespace Apps\%namec%;
+
+use Apps\Commons\AbstractModule,
+    Phalcon\DiInterface;
+
+use Phalcon\Mvc\Dispatcher as MvcDispatcher;
+
+/**
+ * Created by Artdevue.
+ * User: artdevue - Module.php
+ * Date: %date%
+ * Time: %time%
+ * Project: phalcon-blank
+ *
+ * Class Module
+ */
+class Module extends AbstractModule
+{
+    function __construct()
+    {
+        $this->module    = '%namec%';
+        $this->namespace = __NAMESPACE__;
+        $this->path      = __DIR__;
+    }
+
+    /**
+     * Registers the module-only services
+     */
+    public function registerModuleServices(DiInterface $di)
+    {
+        parent::registerModuleServices($di);
+    }
+
+    protected function registerService(DiInterface $di)
+    {
+        parent::registerServices($di);
+    }
+
+    /**
+     * Registers module View Service
+     */
+    protected function registerViewService(DiInterface $di)
+    {
+        parent::registerViewService($di);
+    }
+}

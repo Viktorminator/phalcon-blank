@@ -1,0 +1,38 @@
+[Mon, 27 Feb 17 10:03:41 +0100][DEBUG] Error to handle: /api
+[Mon, 27 Feb 17 21:33:11 +0100][DEBUG] Error to handle: /api
+[Mon, 27 Feb 17 21:34:52 +0100][DEBUG] Exception: Just because in /Volumes/Data/project/phalcon-blank/apps/api/controllers/IndexController.php:23
+Stack trace:
+#0 [internal function]: Apps\Api\Controllers\IndexController->indexAction()
+#1 [internal function]: Phalcon\Dispatcher->callActionMethod(Object(Apps\Api\Controllers\IndexController), 'indexAction', Array)
+#2 [internal function]: Phalcon\Dispatcher->_dispatch()
+#3 [internal function]: Phalcon\Dispatcher->dispatch()
+#4 /Volumes/Data/project/phalcon-blank/public/index.php(68): Phalcon\Mvc\Application->handle()
+#5 {main}
+[Mon, 27 Feb 17 21:35:22 +0100][DEBUG] Error to handle: /api/jh
+[Mon, 27 Feb 17 21:36:36 +0100][DEBUG] Error to handle: /api/jh
+[Mon, 27 Feb 17 21:36:40 +0100][DEBUG] Exception: Just because in /Volumes/Data/project/phalcon-blank/apps/api/controllers/IndexController.php:23
+Stack trace:
+#0 [internal function]: Apps\Api\Controllers\IndexController->indexAction()
+#1 [internal function]: Phalcon\Dispatcher->callActionMethod(Object(Apps\Api\Controllers\IndexController), 'indexAction', Array)
+#2 [internal function]: Phalcon\Dispatcher->_dispatch()
+#3 [internal function]: Phalcon\Dispatcher->dispatch()
+#4 /Volumes/Data/project/phalcon-blank/public/index.php(68): Phalcon\Mvc\Application->handle()
+#5 {main}
+[Mon, 27 Feb 17 21:40:28 +0100][DEBUG] Error to handle: /api/hg
+[Mon, 27 Feb 17 21:40:49 +0100][DEBUG] Error to handle: /api/hg
+[Mon, 27 Feb 17 21:43:01 +0100][DEBUG] Error to handle: /api/hg
+[Mon, 27 Feb 17 21:43:23 +0100][DEBUG] Error to handle: /api/hg
+[Mon, 27 Feb 17 21:43:25 +0100][DEBUG] Error to handle: /api/hg
+[Mon, 27 Feb 17 21:48:25 +0100][DEBUG] Error to handle: /api/hg
+[Mon, 27 Feb 17 21:49:06 +0100][DEBUG] Error to handle: /api/hg
+[Mon, 27 Feb 17 22:14:20 +0100][DEBUG] Exception: Just because in /Volumes/Data/project/phalcon-blank/apps/api/controllers/IndexController.php:23
+Stack trace:
+#0 [internal function]: Apps\Api\Controllers\IndexController->indexAction()
+#1 [internal function]: Phalcon\Dispatcher->callActionMethod(Object(Apps\Api\Controllers\IndexController), 'indexAction', Array)
+#2 [internal function]: Phalcon\Dispatcher->_dispatch()
+#3 [internal function]: Phalcon\Dispatcher->dispatch()
+#4 /Volumes/Data/project/phalcon-blank/public/index.php(68): Phalcon\Mvc\Application->handle()
+#5 {main}
+[Mon, 27 Feb 17 22:14:34 +0100][DEBUG] Error to handle: /api/hg
+[Mon, 27 Feb 17 22:16:16 +0100][DEBUG] Error to handle: /api/hg
+[Mon, 27 Feb 17 22:17:39 +0100][DEBUG] Error to handle: /api/hg

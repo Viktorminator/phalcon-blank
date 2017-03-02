@@ -1,0 +1,10 @@
+<?php
+/**
+ * Created by Artdevue.
+ * User: artdevue - config.php
+ * Date: %date%
+ * Time: %time%
+ * Project: phalcon-blank
+ */
+
+return new \Phalcon\Config([]);

@@ -45,6 +45,7 @@ return new \Phalcon\Config([
         'cryptSalt' => 'WtxTUtBpgDSPLJIWdVcOQbdza1G1KLYx',
         'cacheDir'  => PROJECT_PATH . 'cache/',
         'viewsDir'  => PROJECT_PATH . 'apps/commons/views/',
+        'config.php' => PROJECT_PATH . 'apps/logs/error.log'
     ],
 
     'base_uri' => 'http://phalcon-blank.com/',

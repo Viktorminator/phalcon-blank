@@ -6,8 +6,6 @@
  * Time: 15:46
  * Project: phalcon-blank
  */
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 define('PHALCONSTART', microtime(true));
 define('PROJECT_PATH', dirname(dirname(__FILE__)) . '/');
@@ -15,9 +13,20 @@ define('PROJECT_PATH', dirname(dirname(__FILE__)) . '/');
 use Phalcon\Mvc\Application,
     Phalcon\Loader;
 
-require_once PROJECT_PATH . 'apps/bootstrap.php';
+date_default_timezone_set('UTC');
 
 try {
+
+    require_once PROJECT_PATH . 'apps/bootstrap.php';
+
+    //debug
+    if ($config->debug) {
+        $debug = new \Phalcon\Debug();
+        $debug->listen();
+    } else {
+        error_reporting(0);
+    }
+
     $loader = new Loader();
 
     $loader->registerNamespaces([
@@ -48,6 +57,7 @@ try {
      * @var Phalcon\DI\FactoryDefault $di
      */
     $application->setDI($di);
+    //$application->useImplicitView(false);
 
     /**
      * Register application modules
@@ -60,20 +70,26 @@ try {
             'path'      => $modul->dir . 'Module.php'
         ];
     }
-    $application->registerModules($modules);
 
+    $application->registerModules($modules);
     //echo $application->handle()->getContent();
+
     $response = $application->handle();
     $response->send();
 
-} catch (Exception $e) {
-    if ($config->debug) {
-        echo get_class($e), ": ", $e->getMessage(), "\n";
-        echo " File=", $e->getFile(), "\n";
-        echo " Line=", $e->getLine(), "\n";
-        echo $e->getTraceAsString();
+}
+catch (Exception $e) {
+    if (!$config->debug) {
+        // Log the exception
+        $logger = new Logger($config->application->errorLog);
+        $logger->error($e->getMessage());
+        $logger->error($e->getTraceAsString());
+        // Show an static error page
+        $response = new Response();
+        $response->redirect('500');
+        $response->send();
     } else {
-        echo 'Unknown Error';
-        die;
+        echo 'Exception: ', $e->getMessage(), '<br />';
+        echo nl2br( htmlentities( $e->getTraceAsString() ) );
     }
 }

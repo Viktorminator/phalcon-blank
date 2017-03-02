@@ -1,0 +1,13 @@
+<?php
+/**
+ * Created by Artdevue.
+ * User: artdevue - routes.php
+ * Date: %date%
+ * Time: %time%
+ * Project: phalcon-blank
+ */
+
+$route->add('', [
+    'controller' => 'index',
+    'action'     => 'index'
+])->setName('%name%.index');

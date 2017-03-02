@@ -59,6 +59,7 @@ abstract class AbstractModule implements ModuleDefinitionInterface
         $loader->registerNamespaces([
             $this->namespace . '\Controllers' => $this->path . '/controllers/',
             $this->namespace . '\Models'      => $this->path . '/models/',
+            $this->namespace . '\Form'      => $this->path . '/forms/',
         ]);
 
         $loader->register();

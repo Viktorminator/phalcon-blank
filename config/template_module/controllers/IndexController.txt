@@ -2,14 +2,15 @@
 /**
  * Created by Artdevue.
  * User: artdevue - IndexController.php
- * Date: 25.02.17
- * Time: 16:56
+ * Date: %date%
+ * Time: %time%
  * Project: phalcon-blank
  *
- * Class IndexController  * @package Apps\backend\Controllers
+ * Class IndexController
+ * @package Apps\%namec%\Controllers
  */
 
-namespace Apps\Backend\Controllers;
+namespace Apps\%namec%\Controllers;
 
 use Phalcon\Mvc\View,
     Phalcon\Mvc\Dispatcher;
@@ -24,6 +25,6 @@ class IndexController extends BaseController
 
     public function indexAction()
     {
-        //$g=$f;
+
     }
 }

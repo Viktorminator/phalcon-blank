@@ -167,17 +167,9 @@ $di->set('flash', function () {
 });
 
 /**
- * FlashSession service with custom CSS classes
+ * This component aids the developer in common security tasks such as password
+ * hashing and Cross-Site Request Forgery protection (CSRF).
  */
-$di->set('flashSession', function () {
-    return new FlashSession([
-        'error'   => 'errorHandler alert alert-danger notification-error',
-        'success' => 'errorHandler alert alert-success',
-        'notice'  => 'errorHandler alert alert-info',
-        'warning' => 'errorHandler alert alert-warning',
-    ]);
-});
-
 $di->set('security', function () {
     $security = new Security();
 
@@ -259,7 +251,3 @@ $di->set('modelsCache', function () {
         "prefix"   => "cache-"
     ]);
 });
-
-
-$debug = new \Phalcon\Debug();
-$debug->listen();

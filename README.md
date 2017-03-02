@@ -79,9 +79,7 @@ $ php apps/cli.php modules create $nameModule $prefixRouter $hostName
 License
 -------
 
-This project is open-sourced software licensed under the MIT License.
-
-See the LICENSE file for more information.
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
 Authors
 -------

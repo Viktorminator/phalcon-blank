@@ -7,7 +7,7 @@
  * Project: phalcon-blank
  */
 
-date_default_timezone_set('US/Eastern');
+date_default_timezone_set('UTC');
 
 use Phalcon\Di\FactoryDefault\Cli as CliDI;
 use Phalcon\Cli\Console as ConsoleApp;
