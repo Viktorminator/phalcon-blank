@@ -14,7 +14,7 @@ namespace Library;
 
 use Phalcon\Mvc\User\Component;
 
-class Helpers  extends Component
+class Helpers extends Component
 {
     public function getHttpStatusMessage($statusCode){
         $httpStatus = array(

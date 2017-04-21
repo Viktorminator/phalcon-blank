@@ -24,6 +24,6 @@ class IndexController extends BaseController
 
     public function indexAction()
     {
-        //$g=$f;
+        $g=$f;
     }
 }

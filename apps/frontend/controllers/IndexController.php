@@ -23,6 +23,7 @@ class IndexController extends BaseController
     {
         //$df = 'kj';
         //$this->view->setVars(compact('df'));
+        //die(var_dump($this->trans->_("validation.accepted", ['attribute' => 'test'])));
     }
 
 }

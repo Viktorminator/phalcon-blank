@@ -12,4 +12,4 @@ require_once PROJECT_PATH . 'vendor/autoload.php';
 /**
  * Read the configuration
  */
-$config = include PROJECT_PATH . 'config/config.php';
+$config = include PROJECT_PATH. 'config/config.php';

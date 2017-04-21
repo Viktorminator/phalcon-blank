@@ -76,6 +76,18 @@ $ php apps/cli.php modules create $nameModule $prefixRouter $hostName
 - **$prefixRouter** - (*String*) If the router prefix different from the module name, then enter here. If If you select - **null** - then there will be no prefix.
 - **$hostName**     - (*String*) Host Name, if you want to have your module on another host. For example: http://catalog.site.com
 
+### Using Translation
+All files for translation are located in the directory specified in the configuration file with the parameter: **name_lang_folder** (default the folder **_lang_**) and in the subfolder of the default language in the configuration file with the parameter: **default_lang** (default lang **_en_**)
+
+The example of use in the controller:
+```php
+$accepted = $this->trans->_("validation.accepted", ['attribute' => 'test']);
+```
+The example of use in the template volt:
+```html
+{{ trans._("validation.accepted", ['attribute': 'test']) }}
+```
+
 License
 -------
 

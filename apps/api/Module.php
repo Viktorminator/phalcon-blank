@@ -93,7 +93,7 @@ class Module extends AbstractModule
 
         // This component makes use of adapters to store the logged messages.
         $di->setShared('logger', function () {
-            return new FileAdapter(PROJECT_PATH . "apps/logs/api.log");
+            return new FileAdapter(PROJECT_PATH . "storage/logs/api.log");
         });
     }
 

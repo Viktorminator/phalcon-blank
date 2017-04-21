@@ -15,15 +15,18 @@ use Phalcon\Mvc\Application,
 
 date_default_timezone_set('UTC');
 
-try {
+try
+{
 
     require_once PROJECT_PATH . 'apps/bootstrap.php';
 
     //debug
-    if ($config->debug) {
+    if ($config->debug)
+    {
         $debug = new \Phalcon\Debug();
         $debug->listen();
-    } else {
+    } else
+    {
         error_reporting(0);
     }
 
@@ -64,7 +67,8 @@ try {
      */
     $modules = [];
 
-    foreach ($config->modules as $index => $modul) {
+    foreach ($config->modules as $index => $modul)
+    {
         $modules[$index] = [
             'className' => $modul->className,
             'path'      => $modul->dir . 'Module.php'
@@ -77,9 +81,10 @@ try {
     $response = $application->handle();
     $response->send();
 
-}
-catch (Exception $e) {
-    if (!$config->debug) {
+} catch (Exception $e)
+{
+    if (!$config->debug)
+    {
         // Log the exception
         $logger = new Logger($config->application->errorLog);
         $logger->error($e->getMessage());
@@ -88,8 +93,12 @@ catch (Exception $e) {
         $response = new Response();
         $response->redirect('500');
         $response->send();
-    } else {
-        echo 'Exception: ', $e->getMessage(), '<br />';
-        echo nl2br( htmlentities( $e->getTraceAsString() ) );
+    } else
+    {
+        echo " PhalconException : happened in " . get_class($e) . " class <br/> \n";
+        echo " ExceptionMessage : <strong style='color:red'>" . $e->getMessage() . "</strong><br/>\n";
+        echo " File=" . $e->getFile();
+        echo " Line=" . $e->getLine() . "<br/>\n<hr>";
+        echo nl2br(htmlentities($e->getTraceAsString()));
     }
 }

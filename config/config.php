@@ -32,6 +32,9 @@ return new \Phalcon\Config([
         ]
     ],
 
+    'name_lang_folder' => 'lang',
+    'default_lang'     => 'en',
+
     'database' => [
         'adapter'  => 'Mysql',
         'host'     => 'localhost',
@@ -45,7 +48,7 @@ return new \Phalcon\Config([
         'cryptSalt' => 'WtxTUtBpgDSPLJIWdVcOQbdza1G1KLYx',
         'cacheDir'  => PROJECT_PATH . 'cache/',
         'viewsDir'  => PROJECT_PATH . 'apps/commons/views/',
-        'config.php' => PROJECT_PATH . 'apps/logs/error.log'
+        'errorLog' => PROJECT_PATH . 'storage/logs/error.log'
     ],
 
     'base_uri' => 'http://phalcon-blank.com/',

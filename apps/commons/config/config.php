@@ -7,4 +7,6 @@
  * Project: phalcon-blank
  */
 
-return new \Phalcon\Config([]);
+return new \Phalcon\Config([
+
+]);

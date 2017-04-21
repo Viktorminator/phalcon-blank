@@ -126,7 +126,7 @@ abstract class AbstractModule implements ModuleDefinitionInterface
         // This component makes use of adapters to store the logged messages.
         $di->setShared('logger', function () use ($module )
         {
-            return new FileAdapter(PROJECT_PATH . "apps/logs/' . $module  . '.log");
+            return new FileAdapter(PROJECT_PATH . "storage/logs/' . $module  . '.log");
         });
     }
 
