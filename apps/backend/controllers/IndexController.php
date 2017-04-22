@@ -24,6 +24,11 @@ class IndexController extends BaseController
 
     public function indexAction()
     {
-        $g=$f;
+
+    }
+
+    public function loginAction()
+    {
+
     }
 }

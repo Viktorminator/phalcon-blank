@@ -76,8 +76,27 @@ $ php apps/cli.php modules create $nameModule $prefixRouter $hostName
 - **$prefixRouter** - (*String*) If the router prefix different from the module name, then enter here. If If you select - **null** - then there will be no prefix.
 - **$hostName**     - (*String*) Host Name, if you want to have your module on another host. For example: http://catalog.site.com
 
+### Using Multilanguage
+* You must activate the "**multilang => true**" option in the configuration file.
+* Parameter "**default_lang => 'en'**" is assigned the default language (_now is en_)
+* Add an array of used languages in the project to the "languages" parameter of the configuration file
+1. The default language is displayed in URL address without prefixes. For example: 
+```html
+site.com, site.com/page
+```
+2. If another language is used, then the prefix should be added at the beginning of the URL address. For example:
+```html
+site.com/ua, site.com/ua/page
+```
+3. Active language is called via config: In Controller **$this->config->lang_active** and in Volt **config.lang_active**
+
 ### Using Translation
-All files for translation are located in the directory specified in the configuration file with the parameter: **name_lang_folder** (default the folder **_lang_**) and in the subfolder of the default language in the configuration file with the parameter: **default_lang** (default lang **_en_**)
+All files for translation are located in the directory specified in the configuration file with the parameter: 
+**name_lang_folder** (default is the folder **_lang_**) 
+and in the subfolder of the default language in the configuration file with the parameter: 
+**default_lang** (default lang **_en_**)
+
+The variable name consists of the file names and array keys in the file section.
 
 The example of use in the controller:
 ```php

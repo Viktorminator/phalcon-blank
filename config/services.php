@@ -48,17 +48,31 @@ $di['router'] = function () use ($config)
 
     if (!$config->debug)
     {
-        $router->setDefaultModule('frontend');
+        $router->setDefaultModule($config->default_module);
         $router->setDefaults(['controller' => 'index', 'action' => 'route404']);
     }
 
     // Get explode uri
     $url_array = explode("/", $_SERVER['REQUEST_URI']);
-    $module    = 'frontend';
+    $module    = $config->default_module;
 
-    /**
-     * Connecting routes for modules
-     */
+    $prefix_lang = '';
+    $config->lang_active = $config->default_lang;
+
+    // If multilanguage is allowed
+    if ($config->multilang)
+    {
+        $langkey             =
+            strlen($_SERVER['REQUEST_URI']) == 2 ? $_SERVER['REQUEST_URI'] : substr($_SERVER['REQUEST_URI'], 1, 2);
+
+        if (in_array($langkey, array_keys($config->languages->toArray())) && $langkey != $config->default_lang)
+        {
+            $prefix_lang         = '/' . $langkey;
+            $config->lang_active = $langkey;
+        }
+    }
+
+    // Connecting routes for modules
     foreach ($config->modules as $key => $modul)
     {
         if (file_exists($modul->dir . 'config/routes.php'))
@@ -71,13 +85,28 @@ $di['router'] = function () use ($config)
             // All the routes start with $prefix_router
             if (!empty($modul->prefix_router))
             {
-                $route->setPrefix("/" . $modul->prefix_router);
+                $route->setPrefix($prefix_lang . "/" . $modul->prefix_router);
+                //$route->setPrefix("/" . $modul->prefix_router);
+            } else
+            {
+                if (strlen($prefix_lang) > 1)
+                {
+                    $route->setPrefix($prefix_lang);
+                }
+
             }
 
             // Hostname restriction
             if (!empty($modul->host_name))
             {
                 $route->setHostName($modul->host_name);
+            }
+
+            $home_slesh = '';
+
+            if ($key == $config->default_module && $_SERVER['REQUEST_URI'] == '/' )
+            {
+                $home_slesh = '/';
             }
 
             require $modul->dir . 'config/routes.php';
@@ -270,6 +299,7 @@ if (!$di->has('trans'))
     $di->setShared('trans', function ()
     {
         $trans = new \Library\Trans();
+
         return $trans->get();
     });
 }

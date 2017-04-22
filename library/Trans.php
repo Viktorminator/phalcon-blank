@@ -29,7 +29,7 @@ class Trans extends Component
         $messages = [];
         // Ask browser what is the best message directory
         $message_dir =
-            PROJECT_PATH . "apps/" . $this->config->name_lang_folder . "/" . $this->config->default_lang . "/";
+            PROJECT_PATH . "apps/" . $this->config->name_lang_folder . "/" . $this->config->lang_active . "/";
 
         $dh = opendir($message_dir);
         while (false !== ($filename = readdir($dh)))

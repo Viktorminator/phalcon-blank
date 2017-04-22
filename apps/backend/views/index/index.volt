@@ -1,1 +1,1 @@
-Backend index module
+Backend module - index class

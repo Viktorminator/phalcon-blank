@@ -1,2 +1,2 @@
-Frontend index module
-<?= $this->trans->_('validation.accepted', ['attribute' => 'test']) ?>
+Frontend module - class index<br/>
+Test translation <?= $this->trans->_('validation.accepted', ['attribute' => 'field']) ?>

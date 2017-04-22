@@ -26,4 +26,9 @@ class IndexController extends BaseController
         //die(var_dump($this->trans->_("validation.accepted", ['attribute' => 'test'])));
     }
 
+    public function pageAction()
+    {
+
+    }
+
 }
