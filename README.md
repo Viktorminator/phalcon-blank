@@ -1,13 +1,17 @@
-# Phalcon Boilerplate (Currently project is under development)
+# Phalcon Boilerplate (Current version of beta 0.0.1)
 =========
-** This is a Boilerplate application written on Phalcon framework for the performance boost. This project created to develop applications in an easy way. 
+_This is a Boilerplate application written on Phalcon framework for the performance boost. This project created to develop applications in an easy way._ 
+###### Includes
+* >Multimodality
+* >Multilanguage
+* >Translation
    
-   Have fun :) 
+Have fun :) 
 
 How to install
 --------------
 
-### Using Composer (*recommended*)
+#### Using Composer (*recommended*)
 
 Best way to install Boilerplate would be Composer, if you didn't install it
 
@@ -19,7 +23,7 @@ composer update
 bower update
 ```
 
-### Using Git
+#### Using Git
 
 First you need to clone the project, update vendors:
 
@@ -30,11 +34,10 @@ composer update
 bower update
 ```
 
-Requirements
-------------
+#### Requirements
 
-* PHP 5.5.x/5.6.x/7.0.x development resources (PHP 5.3 and 5.4 are no longer supported)
-* Phalcon **3.0.2**
+* >= PHP 5.5.x/5.6.x/7.0.x development resources (PHP 5.3 and 5.4 are no longer supported)
+* >= Phalcon **3.0.2**
 
 Features
 --------
