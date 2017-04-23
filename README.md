@@ -93,7 +93,7 @@ site.com/ua, site.com/ua/page
 ```
 3. Active language is called via config: In Controller **$this->config->lang_active** and in Volt **config.lang_active**
 
-### Using Translation
+### Using Translation (Source is taken [here](https://docs.phalconphp.com/en/3.0.0/reference/translate.html))
 All files for translation are located in the directory specified in the configuration file with the parameter: 
 **name_lang_folder** (default is the folder **_lang_**) 
 and in the subfolder of the default language in the configuration file with the parameter: 
@@ -109,6 +109,7 @@ The example of use in the template volt:
 ```html
 {{ trans._("validation.accepted", ['attribute': 'test']) }}
 ```
+
 
 License
 -------
